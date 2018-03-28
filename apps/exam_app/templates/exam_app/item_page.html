@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Item Information</title>
+</head>
+<body>
+    <a href="/exam_app/logout">Logout</a>
+    <h1>{{ item.name }}</h1>
+    <p>Added by: {{ item.creator }}</p>
+    {% if item.creator == logged_user %}
+    <a href="/exam_app/{{ item.id }}/destroy">Delete</a>
+    {% endif %}
+    
+    
+    <p>Other users who have added item to their wishlist:</p>
+    {% for triptaker in item.other_triptakers.all %}
+    <p>{{ triptaker.username }}</p>
+    {% endfor %}
+    <a href="/exam_app/">Home</a>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>Current User: {{ request.session.logged_user }}</p>
+    <a href="/exam_app/logout">Logout</a>
+    <h1>Employee Wishlist</h1>
+
+    <h2>Your Wishlist</h2>
+    <table>
+        <thead>
+            <th>Item</th>
+            <th>Added By</th>
+            <th>Date Added</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            {% for item in My_Items %}
+            <tr>
+                <td><a href="/exam_app/{{ item.id }}">{{ item.name }}</a></td>
+                <td>{{ item.creator }}</td>
+                <td>{{ item.created_at }}</td>
+                <td>{% if item.creator != logged_user %} <a href="/exam_app/{{ item.id }}/remove">Remove from Wishlist</a>{% endif %} {% if item.creator == logged_user %} <a href="/exam_app/{{ item.id }}/destroy">Delete</a> {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/exam_app/new">Add Item</a>
+    
+    <h2>Other Users' Wish List:</h2>
+    <table>
+        <thead>
+            <th>Item</th>
+            <th>Added By</th>
+            <th>Date Added</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            {% for item in Items %}
+                {% if not item in My_Items %}
+                <tr>
+                    <td><a href="/exam_app/{{ item.id }}">{{ item.name }}</a></td>
+                    <td>{{ item.creator }}</td>
+                    <td>{{ item.created_at }}</td>
+                    <td><a href="/exam_app/{{ item.id }}/join">Add to my Wishlist</a></td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
